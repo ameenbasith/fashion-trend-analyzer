@@ -1,3 +1,5 @@
+# src/database/database_setup.py
+
 import sqlite3
 import os
 from sqlalchemy import create_engine
@@ -5,8 +7,14 @@ import pandas as pd
 
 
 class DatabaseManager:
-    def __init__(self, db_path='data/fashion_trends.db'):
-        self.db_path = db_path
+    def __init__(self, db_path=None):
+        if db_path is None:
+            # Use the correct database path
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            self.db_path = os.path.join(project_root, 'src', 'database', 'data', 'fashion_trends.db')
+        else:
+            self.db_path = db_path
+
         self.engine = None
         self.conn = None
 
